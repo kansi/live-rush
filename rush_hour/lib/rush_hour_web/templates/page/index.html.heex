@@ -1,0 +1,74 @@
+<div class="flex flex-col">
+  <div class="flex">
+    <div class="flex-none">
+      <input id="player-name" name="player_name" type="text"  required class="py-1.5 px-4 bg-white rounded placeholder-gray-400 text-base text-gray-800 appearance-none inline-block w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 border border-gray-400" placeholder="Player name">
+    </div>
+    <button type="button" class="ml-2 px-4 bg-gray-100 text-gray-800 font-normal rounded shadow active:bg-gray-400 border border-gray-400 focus:outline-none">
+        Filter
+    </button>
+    <div class="flex-grow "></div>
+    <button type="button" class="ml-2 px-4 bg-green-600 text-white font-normal rounded shadow active:bg-green-800 focus:outline-none">
+      <i class="bi bi-file-earmark-spreadsheet"></i>
+      Export CSV
+    </button>
+  </div>
+  <div class="sm:-mx-6 lg:-mx-8 mt-4">
+    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+      <div class="shadow-sm overflow-hidden border border-gray-200 rounded-sm">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50 text-gray-500 uppercase font-medium text-xs">
+            <tr>
+              <th scope="col" class="table-header"> Player </th>
+              <th scope="col" class="table-header border-l"> Att </th>
+              <th scope="col" class="table-header"> Att/G </th>
+              <th scope="col" class="table-header-sm border-l">
+                Yds <button title="sort" class="sort-button-inactive"> <i class="bi bi-sort-numeric-down"></i> </button>
+              </th>
+              <th scope="col" class="table-header"> Avg </th>
+              <th scope="col" class="table-header"> Yds/G </th>
+              <th scope="col" class="table-header-sm border-l">
+                TD <button title="sort" class="sort-button-inactive"> <i class="bi bi-sort-numeric-down"></i> </button>
+              </th>
+              <th scope="col" class="table-header"> 1st </th>
+              <th scope="col" class="table-header"> 1st% </th>
+              <th scope="col" class="table-header"> 20+ </th>
+              <th scope="col" class="table-header border-l"> 40+ </th>
+              <th scope="col" class="table-header-sm">
+                Lng <button title="sort" class="sort-button-inactive"> <i class="bi bi-sort-numeric-down"></i> </button>
+              </th>
+              <th scope="col" class="table-header border-l"> FUM </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr>
+              <td class="px-6 py-2 whitespace-nowrap">
+                <div class="flex items-center">
+                  <div>
+                    <div class="text-sm font-medium text-gray-900">
+                      Joe Banyard
+                    </div>
+                    <div class="text-sm text-gray-500"> RB, JAX </div>
+                  </div>
+                </div>
+              </td>
+              <td class="table-row-stat-col"> 2 </td>
+              <td class="table-row-stat-col"> 2 </td>
+              <td class="table-row-stat-col"> 7 </td>
+              <td class="table-row-stat-col"> 3.5 </td>
+              <td class="table-row-stat-col"> 7 </td>
+              <td class="table-row-stat-col"> 0 </td>
+              <td class="table-row-stat-col"> 7 </td>
+              <td class="table-row-stat-col"> 0 </td>
+              <td class="table-row-stat-col"> 0 </td>
+              <td class="table-row-stat-col"> 0 </td>
+              <td class="table-row-stat-col"> 0 </td>
+              <td class="table-row-stat-col"> 0 </td>
+            </tr>
+
+            <!-- More people... -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
