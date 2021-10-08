@@ -37,3 +37,11 @@ mix assets.deploy
 ```sh
 mix phx.server
 ```
+
+
+## Run tests
+
+```sh
+mix ecto.reset
+mix test
+```
