@@ -9,6 +9,13 @@ elixir 1.12.2-otp-23
 erlang 23.1
 ```
 
+## Setup asset deps
+
+```sh
+cd assets
+npm install
+```
+
 ## Setup database
 
 ```sh
