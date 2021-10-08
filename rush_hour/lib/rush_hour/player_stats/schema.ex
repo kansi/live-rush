@@ -12,7 +12,7 @@ defmodule RushHour.PlayerStats.PlayerStat do
     field :avg, :float
     field :yds_g, :float
     field :td, :integer
-    field :lng, :string
+    field :lng, :integer
     field :first, :integer
     field :first_pct, :float
     field :twenty_plus, :integer

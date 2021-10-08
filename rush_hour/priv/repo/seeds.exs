@@ -31,7 +31,7 @@ Enum.map(player_stats, fn stat ->
   stat = %{
     stat
     | "Yds" => Sanitise.maybe_string_to_int(yds),
-      "Lng" => Sanitise.maybe_int_to_string(lng)
+      "Lng" => Sanitise.maybe_string_to_int(lng)
   }
 
   RushHour.Repo.insert!(RushHour.PlayerStats.new_changeset(stat))

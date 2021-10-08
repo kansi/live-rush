@@ -76,13 +76,11 @@ defmodule RushHourWeb.PageControllerTest do
                get_element_text(hd(rows), "div[data-class='player-name']") |> String.trim()
     end
 
-    # Convert lng to int
-    @tag :skip
     test "Return data sorted by lng", %{conn: conn} do
       insert_list(10, :stat)
-      insert(:stat, name: "special player", lng: "0")
+      insert(:stat, name: "special player", lng: 1000)
 
-      conn = get(conn, "/", %{sort_by: "td"})
+      conn = get(conn, "/", %{sort_by: "lng"})
       {:ok, page} = page_response(conn, 200)
 
       rows = get_element(page, "tbody[data-id='stats-data'] tr")

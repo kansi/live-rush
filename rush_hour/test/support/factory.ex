@@ -13,7 +13,7 @@ defmodule RushHour.Factory do
       avg: random_float(),
       yds_g: random_float(),
       td: random_int(),
-      lng: sequence(:team, &"#{&1}"),
+      lng: random_int(),
       first: random_int(),
       first_pct: random_float(),
       twenty_plus: random_int(),

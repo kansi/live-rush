@@ -12,7 +12,7 @@ defmodule RushHour.Repo.Migrations.AddPlayerStatTable do
       add :avg, :float
       add :yds_g, :float
       add :td, :integer
-      add :lng, :string
+      add :lng, :integer
       add :first, :integer
       add :first_pct, :float
       add :twenty_plus, :integer
