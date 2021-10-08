@@ -2,6 +2,13 @@
 
 To run the project browse to `rush_hour` directory and execute the following,
 
+## Env
+
+```
+elixir 1.12.2-otp-23
+erlang 23.1
+```
+
 ## Setup database
 
 ```sh
