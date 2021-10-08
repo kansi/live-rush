@@ -12,6 +12,7 @@ Setup the service with seed data
 
 ```sh
 mix setup
+mix assets.deploy
 ```
 
 
