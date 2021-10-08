@@ -44,7 +44,10 @@ defmodule RushHour.MixProject do
       {:phoenix_live_dashboard, "~> 0.5"},
       {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:scrivener_ecto, "~> 2.0"},
+      {:csv, "~> 2.4"},
+      {:ex_machina, "~> 2.7.0", only: :test}
     ]
   end
 
@@ -53,7 +56,7 @@ defmodule RushHour.MixProject do
       setup: ["deps.get", "ecto.setup"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      test: ["ecto.drop", "ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.deploy": [
         "cmd --cd assets ./node_modules/.bin/postcss css/app.css -o ../priv/static/assets/app.css",
         "esbuild default --minify",

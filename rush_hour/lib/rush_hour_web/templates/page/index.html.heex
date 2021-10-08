@@ -1,73 +1,117 @@
 <div class="flex flex-col">
-  <div class="flex">
-    <div class="flex-none">
-      <input id="player-name" name="player_name" type="text"  required class="py-1.5 px-4 bg-white rounded placeholder-gray-400 text-base text-gray-800 appearance-none inline-block w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 border border-gray-400" placeholder="Player name">
-    </div>
-    <button type="button" class="ml-2 px-4 bg-gray-100 text-gray-800 font-normal rounded shadow active:bg-gray-400 border border-gray-400 focus:outline-none">
-        Filter
-    </button>
+  <div class="flex flex-row">
+    <form action="" method="get" class="flex">
+      <input id="player-name" name="player_filter" type="text" class="player-name-filter"
+             placeholder="Player name" value={@query.player_filter} required>
+      <input type="hidden" name="sort_by" value={@query.sort_by} />
+      <button type="submit" class="player-filter-submit-btn">  Filter </button>
+    </form>
+    <%= if is_filtered?(@query) do %>
+    <a data-id="clear-filters" type="submit" class="px-4 py-2 ml-2 text-blue-600 text-base hover:text-blue-800" href={encode_query(%{})}>
+      <i class="bi bi-x-lg text-xs"></i> Clear filters
+    </a>
+    <% end %>
     <div class="flex-grow "></div>
-    <button type="button" class="ml-2 px-4 bg-green-600 text-white font-normal rounded shadow active:bg-green-800 focus:outline-none">
+    <a data-id="export-to-csv" type="button" class="export-csv-btn" href={Routes.export_path(@conn, :index, @query)}>
       <i class="bi bi-file-earmark-spreadsheet"></i>
       Export CSV
-    </button>
+    </a>
   </div>
   <div class="sm:-mx-6 lg:-mx-8 mt-4">
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
       <div class="shadow-sm overflow-hidden border border-gray-200 rounded-sm">
-        <table class="min-w-full divide-y divide-gray-200">
+        <table data-id="stats-table" class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50 text-gray-500 uppercase font-medium text-xs">
             <tr>
               <th scope="col" class="table-header"> Player </th>
               <th scope="col" class="table-header border-l"> Att </th>
               <th scope="col" class="table-header"> Att/G </th>
               <th scope="col" class="table-header-sm border-l">
-                Yds <button title="sort" class="sort-button-inactive"> <i class="bi bi-sort-numeric-down"></i> </button>
+                Yds
+                <%= if is_sorted_by(@query.sort_by, :yds) do %>
+                <a data-id="clear-yds-sort" title="sort" class="sort-button-active" href={encode_query_wo_sort_by(@query)}>
+                  <i class="bi bi-sort-numeric-down"></i>
+                </a>
+                <% else %>
+                <a data-id="enable-yds-sort" title="sort" class="sort-button-inactive" href={encode_query(@query, :sort_by_yds)}>
+                  <i class="bi bi-sort-numeric-down"></i>
+                </a>
+                <% end %>
               </th>
               <th scope="col" class="table-header"> Avg </th>
               <th scope="col" class="table-header"> Yds/G </th>
               <th scope="col" class="table-header-sm border-l">
-                TD <button title="sort" class="sort-button-inactive"> <i class="bi bi-sort-numeric-down"></i> </button>
+                TD
+                <%= if is_sorted_by(@query.sort_by, :td) do %>
+                <a title="sort" class="sort-button-active" href={encode_query_wo_sort_by(@query)}>
+                  <i class="bi bi-sort-numeric-down"></i>
+                </a>
+                <% else %>
+                <a title="sort" class="sort-button-inactive" href={encode_query(@query, :sort_by_td)}> <i class="bi bi-sort-numeric-down"></i></a>
+                <% end %>
               </th>
               <th scope="col" class="table-header"> 1st </th>
               <th scope="col" class="table-header"> 1st% </th>
               <th scope="col" class="table-header"> 20+ </th>
               <th scope="col" class="table-header border-l"> 40+ </th>
               <th scope="col" class="table-header-sm">
-                Lng <button title="sort" class="sort-button-inactive"> <i class="bi bi-sort-numeric-down"></i> </button>
+                Lng
+                <%= if is_sorted_by(@query.sort_by, :lng) do %>
+                <a data-id="clear-lng-sort" title="sort" class="sort-button-active" href={encode_query_wo_sort_by(@query)}>
+                  <i class="bi bi-sort-numeric-down"></i>
+                </a>
+                <% else %>
+                <a data-id="enable-lng-sort" title="sort" class="sort-button-inactive" href={encode_query(@query, :sort_by_lng)}>
+                  <i class="bi bi-sort-numeric-down"></i>
+                </a>
+                <% end %>
               </th>
               <th scope="col" class="table-header border-l"> FUM </th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr>
-              <td class="px-6 py-2 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div>
-                    <div class="text-sm font-medium text-gray-900">
-                      Joe Banyard
+          <tbody data-id="stats-data" class="bg-white divide-y divide-gray-200">
+            <%= for {item, _index} <- Enum.with_index(@player_stats.entries) do %>
+                <tr>
+                  <td class="px-6 py-2 whitespace-nowrap">
+                    <div class="flex items-center">
+                      <div>
+                        <div data-class="player-name" class="text-sm font-medium text-gray-900"> <%= item.name %> </div>
+                        <div class="text-xs text-gray-500"> <%= item.pos %>, <%= item.team %> </div>
+                      </div>
                     </div>
-                    <div class="text-sm text-gray-500"> RB, JAX </div>
-                  </div>
-                </div>
-              </td>
-              <td class="table-row-stat-col"> 2 </td>
-              <td class="table-row-stat-col"> 2 </td>
-              <td class="table-row-stat-col"> 7 </td>
-              <td class="table-row-stat-col"> 3.5 </td>
-              <td class="table-row-stat-col"> 7 </td>
-              <td class="table-row-stat-col"> 0 </td>
-              <td class="table-row-stat-col"> 7 </td>
-              <td class="table-row-stat-col"> 0 </td>
-              <td class="table-row-stat-col"> 0 </td>
-              <td class="table-row-stat-col"> 0 </td>
-              <td class="table-row-stat-col"> 0 </td>
-              <td class="table-row-stat-col"> 0 </td>
-            </tr>
+                  </td>
+                  <td class="table-row-stat-col border-l"> <%= item.att %> </td>
+                  <td class="table-row-stat-col"> <%= item.att_g %> </td>
+                  <td class="table-row-stat-col border-l"> <%= item.yds %> </td>
+                  <td class="table-row-stat-col"> <%= item.avg %> </td>
+                  <td class="table-row-stat-col"> <%= item.yds_g %> </td>
+                  <td class="table-row-stat-col border-l"> <%= item.td %> </td>
+                  <td class="table-row-stat-col"> <%= item.first %> </td>
+                  <td class="table-row-stat-col"> <%= item.first_pct %> </td>
+                  <td class="table-row-stat-col"> <%= item.twenty_plus %> </td>
+                  <td class="table-row-stat-col border-l"> <%= item.forty_plus %> </td>
+                  <td class="table-row-stat-col"> <%= item.lng %> </td>
+                  <td class="table-row-stat-col border-l"> <%= item.fum %> </td>
+                </tr>
 
-            <!-- More people... -->
+                <% end %>
           </tbody>
         </table>
+      </div>
+      <div class="flex flex-row my-8">
+        <%= if @player_stats.page_number > 1 do %>
+            <a data-id="previous-page" type="submit" class="py-2 player-filter-submit-btn" href={previous_page(@query, @player_stats.page_number)}>
+              Previous page
+            </a>
+        <% end %>
+
+        <div class="flex-grow"></div>
+
+        <%= if @player_stats.page_number < @player_stats.total_pages do %>
+            <a data-id="next-page" type="submit" class="py-2 player-filter-submit-btn" href={next_page(@query, @player_stats.page_number)}>
+              Next page
+            </a>
+        <% end %>
       </div>
     </div>
   </div>

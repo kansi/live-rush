@@ -25,6 +25,17 @@
     @apply px-6 py-4 whitespace-nowrap text-sm;
 }
 
+.player-name-filter {
+    @apply py-1.5 px-4 bg-white rounded placeholder-gray-400 text-base text-gray-800 appearance-none inline-block w-full shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 border border-gray-400;
+}
+
+.player-filter-submit-btn {
+    @apply ml-2 px-4 bg-gray-100 text-gray-800 font-normal rounded shadow active:bg-gray-400 border border-gray-400 focus:outline-none;
+}
+
+.export-csv-btn {
+    @apply px-4 py-2 bg-green-600 text-white font-normal rounded shadow active:bg-green-800 focus:outline-none;
+}
 
 /* Alerts and form errors used by phx.new */
 .alert {
