@@ -13,7 +13,7 @@ defmodule RushHourWeb.PageControllerTest do
       assert length(rows) == 3
     end
 
-    test "Shows 'Next Page' button when more than 50 entried exist", %{conn: conn} do
+    test "Shows 'Next Page' button when more than 50 entries exist", %{conn: conn} do
       insert_list(51, :stat)
 
       conn = get(conn, "/", %{sort_by: "yds", player_filter: "player"})
@@ -46,49 +46,21 @@ defmodule RushHourWeb.PageControllerTest do
                get_element_text(rows, "div[data-class='player-name']") |> String.trim()
     end
 
-    test "Return data sorted by yds", %{conn: conn} do
+    test "Return data sorted by yds,td,lng", %{conn: conn} do
       insert_list(10, :stat)
-      insert(:stat, name: "special player", yds: 10000)
+      insert(:stat, name: "special player", yds: 10000, td: 10000, lng: 10000)
 
-      conn = get(conn, "/", %{sort_by: "yds"})
-      {:ok, page} = page_response(conn, 200)
+      Enum.map(["yds", "td", "lng"], fn sort_by ->
+        conn = get(conn, "/", %{sort_by: sort_by})
+        {:ok, page} = page_response(conn, 200)
 
-      rows = get_element(page, "tbody[data-id='stats-data'] tr")
-      assert length(rows) == 11
+        rows = get_element(page, "tbody[data-id='stats-data'] tr")
+        assert length(rows) == 11
 
-      # First row should have the player with highest yds
-      assert "special player" ==
-               get_element_text(hd(rows), "div[data-class='player-name']") |> String.trim()
-    end
-
-    test "Return data sorted by td", %{conn: conn} do
-      insert_list(10, :stat)
-      insert(:stat, name: "special player", td: 10000)
-
-      conn = get(conn, "/", %{sort_by: "td"})
-      {:ok, page} = page_response(conn, 200)
-
-      rows = get_element(page, "tbody[data-id='stats-data'] tr")
-      assert length(rows) == 11
-
-      # First row should have the player with highest td
-      assert "special player" ==
-               get_element_text(hd(rows), "div[data-class='player-name']") |> String.trim()
-    end
-
-    test "Return data sorted by lng", %{conn: conn} do
-      insert_list(10, :stat)
-      insert(:stat, name: "special player", lng: 1000)
-
-      conn = get(conn, "/", %{sort_by: "lng"})
-      {:ok, page} = page_response(conn, 200)
-
-      rows = get_element(page, "tbody[data-id='stats-data'] tr")
-      assert length(rows) == 11
-
-      # First row should have the player with highest lng
-      assert "special player" ==
-               get_element_text(hd(rows), "div[data-class='player-name']") |> String.trim()
+        # First row should have the player with highest stat
+        assert "special player" ==
+                 get_element_text(hd(rows), "div[data-class='player-name']") |> String.trim()
+      end)
     end
 
     test "Ensure 'Clear filter', 'Export CSV' and clear sort button exist", %{conn: conn} do

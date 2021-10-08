@@ -30,11 +30,11 @@
                 Yds
                 <%= if is_sorted_by(@query.sort_by, :yds) do %>
                 <a data-id="clear-yds-sort" title="sort" class="sort-button-active" href={encode_query_wo_sort_by(@query)}>
-                  <i class="bi bi-sort-numeric-down"></i>
+                  <i class="bi bi-sort-numeric-down-alt"></i>
                 </a>
                 <% else %>
                 <a data-id="enable-yds-sort" title="sort" class="sort-button-inactive" href={encode_query(@query, :sort_by_yds)}>
-                  <i class="bi bi-sort-numeric-down"></i>
+                  <i class="bi bi-sort-numeric-down-alt"></i>
                 </a>
                 <% end %>
               </th>
@@ -44,10 +44,10 @@
                 TD
                 <%= if is_sorted_by(@query.sort_by, :td) do %>
                 <a title="sort" class="sort-button-active" href={encode_query_wo_sort_by(@query)}>
-                  <i class="bi bi-sort-numeric-down"></i>
+                  <i class="bi bi-sort-numeric-down-alt"></i>
                 </a>
                 <% else %>
-                <a title="sort" class="sort-button-inactive" href={encode_query(@query, :sort_by_td)}> <i class="bi bi-sort-numeric-down"></i></a>
+                <a title="sort" class="sort-button-inactive" href={encode_query(@query, :sort_by_td)}> <i class="bi bi-sort-numeric-down-alt"></i></a>
                 <% end %>
               </th>
               <th scope="col" class="table-header"> 1st </th>
@@ -58,11 +58,11 @@
                 Lng
                 <%= if is_sorted_by(@query.sort_by, :lng) do %>
                 <a data-id="clear-lng-sort" title="sort" class="sort-button-active" href={encode_query_wo_sort_by(@query)}>
-                  <i class="bi bi-sort-numeric-down"></i>
+                  <i class="bi bi-sort-numeric-down-alt"></i>
                 </a>
                 <% else %>
                 <a data-id="enable-lng-sort" title="sort" class="sort-button-inactive" href={encode_query(@query, :sort_by_lng)}>
-                  <i class="bi bi-sort-numeric-down"></i>
+                  <i class="bi bi-sort-numeric-down-alt"></i>
                 </a>
                 <% end %>
               </th>
